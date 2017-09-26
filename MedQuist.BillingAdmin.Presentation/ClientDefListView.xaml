@@ -1,0 +1,172 @@
+﻿<UserControl x:Class="MedQuist.BillingAdmin.Presentation.ClientDefListView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             Background="{StaticResource WindowBackgroundBrush}"
+             xmlns:waf="http://waf.codeplex.com/schemas"
+             xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
+             xmlns:local="clr-namespace:MedQuist.BillingAdmin.Presentation.Helpers"
+             xmlns:vm="clr-namespace:MedQuist.BillingAdmin.ViewModels;assembly=MedQuist.ViewModels"
+             d:DataContext="{d:DesignInstance vm:InvoiceGroupViewModel}"
+             mc:Ignorable="d"
+             MinWidth="150"
+             FocusManager.FocusedElement="{Binding ElementName=Search}"
+             d:DesignHeight="500"
+             d:DesignWidth="300">
+
+    <UserControl.Resources>
+        <Style TargetType="TextBox">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError"
+                         Value="true">
+                    <Setter Property="Background"
+                            Value="{StaticResource InvalidControlBrush}" />
+                    <Setter Property="ToolTip"
+                            Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors), 
+                    Converter={x:Static waf:ValidationErrorsConverter.Default}}" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="BeigeBox"
+               TargetType="{x:Type TextBox}">
+            <Setter Property="OverridesDefaultStyle"
+                    Value="True" />
+            <Setter Property="SnapsToDevicePixels"
+                    Value="True" />
+            <Setter Property="Background"
+                    Value="{StaticResource WindowBackgroundBrush}" />
+        </Style>
+
+        <Style x:Key="BeigeCombo"
+               TargetType="{x:Type ComboBox}">
+            <Setter Property="OverridesDefaultStyle"
+                    Value="True" />
+            <Setter Property="SnapsToDevicePixels"
+                    Value="True" />
+            <Setter Property="Background"
+                    Value="{StaticResource WindowBackgroundBrush}" />
+        </Style>
+        <DataTemplate x:Key="listBoxTemplate">
+            <StackPanel Margin="3">
+                <DockPanel>
+                    <!--
+                    <TextBlock Text="{Binding InvoiceGrpId}"
+                               x:Name="InvoiceGrpId_ClientDefListView"
+                               DockPanel.Dock="Left"
+                               Foreground="Green"
+                               FontWeight="Bold">
+                    </TextBlock>
+                    -->
+                    <TextBlock Text="{Binding Description}"
+                               DockPanel.Dock="Right" />
+                </DockPanel>
+            </StackPanel>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <Border CornerRadius="10"
+            BorderBrush="Gray"
+            BorderThickness="3"
+            Background="{StaticResource WindowBackgroundBrush}"
+            Margin="0"
+            Padding="4">
+        <Border.Effect>
+            <DropShadowEffect Color="Gray"
+                              Opacity=".50"
+                              ShadowDepth="8" />
+        </Border.Effect>
+        <Grid x:Name="LayoutRoot">
+            <Grid x:Name="LayoutRoot_Copy">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="35" />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <ListBox 
+                         ToolTip="{Binding ViewTip}"
+                         IsEnabled="{Binding EnablePicker,Mode=OneWay}"
+                         x:Name="TheList"
+                         Grid.Row="0"
+                         Background="{StaticResource WindowBackgroundBrush}"
+                         ItemsSource="{Binding ClientLocations,ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                         SelectedItem="{Binding CurrentClientLocation, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=true, 
+                   ValidatesOnDataErrors=true, NotifyOnValidationError=true}"
+                         Grid.ColumnSpan="2"
+                         dd:DragDrop.IsDropTarget="True"
+                         dd:DragDrop.DropHandler="{Binding}"
+                         dd:DragDrop.IsDragSource="False"
+                         ItemTemplate="{StaticResource listBoxTemplate}">
+                </ListBox>
+
+                <DockPanel Grid.Row="2"
+                           Grid.ColumnSpan="2"
+                           Grid.RowSpan="1"
+                           Visibility="{Binding Path=IsExpanded}">
+                </DockPanel>
+                <DockPanel Grid.Row="4"
+                           Grid.ColumnSpan="2"
+                           Visibility="{Binding Path=IsExpanded}">
+                </DockPanel>
+
+                <DockPanel Grid.Row="1"
+                           Grid.ColumnSpan="2">
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Label Content="Search:"
+                               ToolTip="{Binding ClientDefId}"
+                               HorizontalAlignment="Left"
+                               Grid.Column="0" />
+                        <TextBox Text="{Binding SearchString,UpdateSourceTrigger=PropertyChanged}"
+                                 IsEnabled="{Binding EnablePicker,Mode=OneWay}"
+                                 x:Name="Search"
+                                 Grid.Column="1" />
+                        <Button x:Name="Refresh"
+                                ToolTip="Refresh"
+                                Command="{Binding SearchCommand}"
+                                HorizontalAlignment="Center"
+                                Width="Auto"
+                                Height="Auto"
+                                IsEnabled="{Binding EnablePicker,Mode=OneWay}"
+                                Panel.ZIndex="999"
+                                Grid.Column="2">
+                            <Image Source="Resources\refresh.png">
+
+                            </Image>
+
+                        </Button>
+                    </Grid>
+                </DockPanel>
+                <DockPanel Grid.Row="2"
+                           Grid.ColumnSpan="2"
+                           Grid.RowSpan="1"
+                           Visibility="{Binding Path=IsExpanded}">
+                    <CheckBox IsChecked="{Binding NotAssignedFilter, UpdateSourceTrigger=PropertyChanged}"
+                              FlowDirection="RightToLeft"
+                              Margin="5,6,0,8"
+                              Name="chkActive"
+                              Grid.Row="5"
+                              VerticalAlignment="Center"
+                              Height="16"
+                              HorizontalAlignment="Left">Not Assigned to Any Group
+                    </CheckBox>
+                </DockPanel>
+
+            </Grid>
+        </Grid>
+    </Border>
+</UserControl>

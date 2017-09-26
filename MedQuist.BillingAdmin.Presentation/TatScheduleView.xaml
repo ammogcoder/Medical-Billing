@@ -1,0 +1,139 @@
+﻿<UserControl x:Class="MedQuist.BillingAdmin.Presentation.TatScheduleView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:helpers="clr-namespace:MedQuist.BillingAdmin.Presentation.Helpers"
+             xmlns:here="clr-namespace:MedQuist.BillingAdmin.Presentation"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:prefx="clr-namespace:MedQuist.BillingAdmin.ViewModels;assembly=MedQuist.ViewModels"
+             Background="{StaticResource WindowBackgroundBrush}"
+             d:DesignHeight="600"
+             d:DesignWidth="400"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <Style x:Key="defaultCellStyle" TargetType="{x:Type DataGridCell}">
+            <Style.Triggers>
+                <Trigger Property="IsEditing" Value="true">
+                    <Setter Property="BorderBrush" Value="Red" />
+                    <Setter Property="BorderThickness" Value="2" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <here:WPFMessageBox x:Name="MsgBox" Panel.ZIndex="9999" />
+        <Grid x:Name="MainGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid Margin="0,0,0,5" Grid.Row="0"
+                  Grid.Column="0"
+                  Grid.ColumnSpan="2"
+                  HorizontalAlignment="Center"
+               >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0"
+                        Command="{Binding SaveCommand}"
+                        Width="Auto"
+                        Height="Auto"
+                        Content="Save" />
+                <Button Grid.Column="1"
+                        Command="{Binding CancelCommand}"
+                        Width="Auto"
+                        Height="Auto"
+                        Content="Cancel" />
+            </Grid>
+            
+            <DataGrid x:Name="ContractTATSchedules"
+                      Grid.Row="1"
+                      Grid.Column="0"
+                      Width="Auto"
+                      AutoGenerateColumns="False"
+                      CanUserAddRows="True"
+                      CanUserDeleteRows="True"
+                      CellStyle="{StaticResource defaultCellStyle}"
+                      ItemsSource="{Binding ContractTatScheds}"
+                      SelectedItem="{Binding SelectedContractTatSched}"
+                      SelectionMode="Single">
+
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="Begin On">
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <DatePicker BorderThickness="0"
+                                            SelectedDate="{Binding Path=BEGIN_ON, Mode=TwoWay}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock>
+                                    <TextBlock.Text>
+                                        <Binding ConverterCulture="en-US"
+                                                 Path="BEGIN_ON"
+                                                 StringFormat="{}{0:MM/dd/yyyy}" />
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Width="Auto"
+                                            Header="End After">
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <DatePicker BorderThickness="0"
+                                            SelectedDate="{Binding Path=END_AFTER, Mode=TwoWay}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock>
+                                    <TextBlock.Text>
+                                        <Binding ConverterCulture="en-US"
+                                                 Path="END_AFTER"
+                                                 StringFormat="{}{0:MM/dd/yyyy}" />
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+
+            <Grid Grid.Row="1" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Label Content="TAT Schedule Applied"
+                       ToolTip="{Binding TatSchedToolTip}"
+                       Grid.Row="0"
+                       Grid.Column="0" />
+                <ComboBox ItemsSource="{Binding TatScheds}"
+                          SelectedValue="{Binding SelectedTatSched, UpdateSourceTrigger=PropertyChanged}"
+                          DisplayMemberPath="DESCR"
+                          Grid.Row="0"
+                          Grid.Column="1" />
+                <Label Content="Charge TAT Automatically"
+                       Grid.Row="1"
+                       Grid.Column="0" />
+                <CheckBox Grid.Row="1"
+                          VerticalAlignment="Center"
+                          Grid.Column="1"
+                          IsChecked="{Binding ElementName=ContractTATSchedules,Path=SelectedItem.AUTO_CHG, UpdateSourceTrigger=PropertyChanged,ValidatesOnDataErrors=True}" />
+            </Grid>
+
+        </Grid>
+    </Grid>
+</UserControl>

@@ -1,0 +1,193 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7B94EB5A-835C-4C27-9704-C599C2B52428}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Spheris.Billing.Core</RootNamespace>
+    <AssemblyName>Spheris.Billing.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <SignAssembly>false</SignAssembly>
+    <AssemblyOriginatorKeyFile>SpherisFinance.pfx</AssemblyOriginatorKeyFile>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <PublishUrl>http://localhost/Spheris.Billing.Core/</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisIgnoreBuiltInRuleSets>true</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisIgnoreBuiltInRules>true</CodeAnalysisIgnoreBuiltInRules>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Domain\ActiveSchedule.cs" />
+    <Compile Include="Domain\AddOnChgSched.cs" />
+    <Compile Include="Domain\AddOnChgType.cs" />
+    <Compile Include="Domain\AdjType.cs" />
+    <Compile Include="Domain\BatchJob.cs" />
+    <Compile Include="Domain\BatchJobType.cs" />
+    <Compile Include="Domain\BillingSpecialist.cs" />
+    <Compile Include="Domain\Brand.cs" />
+    <Compile Include="Domain\ChargeMethod.cs" />
+    <Compile Include="Domain\Contract.cs" />
+    <Compile Include="Domain\ContractNote.cs" />
+    <Compile Include="Domain\ClientLocation.cs" />
+    <Compile Include="Domain\ContractRate.cs" />
+    <Compile Include="Domain\ContractRateAlt.cs" />
+    <Compile Include="Domain\ContractsUsingTatSched.cs" />
+    <Compile Include="Domain\ContractTatSched.cs" />
+    <Compile Include="Domain\ContractVolumeEvt.cs" />
+    <Compile Include="Domain\DeliveryMethod.cs" />
+    <Compile Include="Domain\ClientErrorType.cs" />
+    <Compile Include="Domain\ErrClientWorkType.cs" />
+    <Compile Include="Domain\ErrNoValidContract.cs" />
+    <Compile Include="Domain\ExtSys.cs" />
+    <Compile Include="Domain\ExtWorkTypeSource.cs" />
+    <Compile Include="Domain\FaxCompMethod.cs" />
+    <Compile Include="Domain\Freq.cs" />
+    <Compile Include="Domain\HashHelper.cs" />
+    <Compile Include="Domain\IGetValidationError.cs" />
+    <Compile Include="Domain\Invoice.cs" />
+    <Compile Include="Domain\InvoiceCount.cs" />
+    <Compile Include="Domain\InvoiceGroup.cs" />
+    <Compile Include="Domain\InvoiceGroupReport.cs" />
+    <Compile Include="Domain\InvoiceGroupTable.cs" />
+    <Compile Include="Domain\InvoiceGrpOverride.cs" />
+    <Compile Include="Domain\InvoiceGrpReport.cs" />
+    <Compile Include="Domain\InvoiceGrpStatus.cs" />
+    <Compile Include="Domain\InvoiceStatus.cs" />
+    <Compile Include="Domain\InvoiceStyle.cs" />
+    <Compile Include="Domain\InvoiceStyleColumn.cs" />
+    <Compile Include="Domain\ObjectBase.cs" />
+    <Compile Include="Domain\OverRideKeySource.cs" />
+    <Compile Include="Domain\PaymentTerms.cs" />
+    <Compile Include="Domain\Platform.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Domain\QtyRule.cs" />
+    <Compile Include="Domain\RemitTo.cs" />
+    <Compile Include="Domain\ReportType.cs" />
+    <Compile Include="Domain\ReportTypeTable.cs" />
+    <Compile Include="Domain\ScopeRule.cs" />
+    <Compile Include="Domain\StatCompMethod.cs" />
+    <Compile Include="Domain\TatCompMethod.cs" />
+    <Compile Include="Domain\TatRate.cs" />
+    <Compile Include="Domain\TatSched.cs" />
+    <Compile Include="Domain\ExtWorkType.cs" />
+    <Compile Include="Domain\VolumeEvtRate.cs" />
+    <Compile Include="Domain\VolumeEvtType.cs" />
+    <Compile Include="Domain\WorkUnit.cs" />
+    <Compile Include="Exceptions\InvoiceNotFoundException.cs" />
+    <Compile Include="Exceptions\MissingContractException.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SpherisFinance.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SqlParser\SqlParser.csproj">
+      <Project>{8A0BB4FD-F01F-4B42-AACB-FC7CD368FEFB}</Project>
+      <Name>SqlParser</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

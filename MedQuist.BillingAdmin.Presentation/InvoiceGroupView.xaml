@@ -1,0 +1,330 @@
+﻿<UserControl x:Class="MedQuist.BillingAdmin.Presentation.InvoiceGroupView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:dd="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
+             xmlns:here="clr-namespace:MedQuist.BillingAdmin.Presentation"
+             xmlns:local="clr-namespace:MedQuist.BillingAdmin.Presentation.Helpers"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:MedQuist.BillingAdmin.ViewModels;assembly=MedQuist.ViewModels"
+             xmlns:waf="http://waf.codeplex.com/schemas"
+             xmlns:wintheme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero"
+             MouseEnter="UserControl_MouseEnter"
+             MinWidth="150"
+             Background="{StaticResource WindowBackgroundBrush}"
+             d:DesignHeight="500"
+             d:DesignWidth="300"
+             FocusManager.FocusedElement="{Binding ElementName=Search}"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <!--
+            <Style TargetType="TextBox">
+            
+            <Style.Triggers>
+            <Trigger Property="Validation.HasError" Value="true">
+            <Setter Property="Background" Value="{StaticResource InvalidControlBrush}" />
+            <Setter Property="ToolTip" Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors), Converter={x:Static waf:ValidationErrorsConverter.Default}}" />
+            </Trigger>
+            </Style.Triggers>
+            </Style>
+            <Style x:Key="BeigeBox" TargetType="{x:Type TextBox}">
+            <Setter Property="OverridesDefaultStyle" Value="True" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="Background" Value="{StaticResource WindowBackgroundBrush}" />
+            </Style>
+            
+            <Style x:Key="BeigeCombo" TargetType="{x:Type ComboBox}">
+            <Setter Property="OverridesDefaultStyle" Value="True" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="Background" Value="{StaticResource WindowBackgroundBrush}" />
+            </Style>
+        -->
+        <DataTemplate x:Key="listBoxTemplate">
+            <StackPanel Margin="3">
+                <DockPanel>
+                    <TextBlock x:Name="Left"
+                               DockPanel.Dock="Left"
+                               FontWeight="Bold"
+                               Foreground="Green"
+                               Text="{Binding InvoiceGrpId}" />
+
+                    <TextBlock Text="  " />
+
+
+                    <TextBlock DockPanel.Dock="Right" Text="{Binding Description}" />
+                </DockPanel>
+
+            </StackPanel>
+        </DataTemplate>
+    </UserControl.Resources>
+    <Grid>
+        <here:WPFMessageBox x:Name="MsgBox" Panel.ZIndex="9999" />
+        <Grid x:Name="MainGrid">
+
+            <Border Margin="0"
+                    Background="{StaticResource WindowBackgroundBrush}"
+                    BorderBrush="Gray"
+                    BorderThickness="3"
+                    CornerRadius="10"
+                    Padding="4">
+                <Border.Effect>
+                    <DropShadowEffect Opacity=".50"
+                                      ShadowDepth="8"
+                                      Color="Gray" />
+                </Border.Effect>
+
+                <Grid x:Name="LayoutRoot">
+                    <Grid x:Name="LayoutRoot_Copy">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="35" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <ListBox x:Name="TheList"
+                                 Grid.Row="0"
+                                 Grid.ColumnSpan="2"
+                                 Background="{StaticResource WindowBackgroundBrush}"
+                                 dd:DragDrop.DropHandler="{Binding}"
+                                 dd:DragDrop.IsDragSource="False"
+                                 dd:DragDrop.IsDropTarget="True"
+                                 IsEnabled="{Binding EnablePicker,
+                                                     Mode=OneWay}"
+                                 ItemsSource="{Binding IGroups,
+                                                       ValidatesOnDataErrors=True,
+                                                       UpdateSourceTrigger=PropertyChanged}"
+                                 ItemTemplate="{StaticResource listBoxTemplate}"
+                                 PreviewMouseUp="TheList_PreviewMouseUp"
+                                 SelectedIndex="{Binding CurrentGroupItemIndex,
+                                                         UpdateSourceTrigger=PropertyChanged,
+                                                         ValidatesOnExceptions=true,
+                                                         ValidatesOnDataErrors=true,
+                                                         NotifyOnValidationError=true}"
+                                 SelectedItem="{Binding CurrentGroupItem,
+                                                        UpdateSourceTrigger=PropertyChanged,
+                                                        ValidatesOnExceptions=true,
+                                                        ValidatesOnDataErrors=true,
+                                                        NotifyOnValidationError=true}"
+                                 SelectedValue="{Binding CurrentGroupItemValue,
+                                                         UpdateSourceTrigger=PropertyChanged,
+                                                         ValidatesOnExceptions=true,
+                                                         ValidatesOnDataErrors=true,
+                                                         NotifyOnValidationError=true}"
+                                 SelectionMode="{Binding SelectionMode}"
+                                 ToolTip="{Binding ViewTip}" />
+
+                        <DockPanel Grid.Row="2"
+                                   Grid.RowSpan="1"
+                                   Grid.ColumnSpan="2"
+                                   Visibility="{Binding Path=IsExpanded}">
+
+                            <Label HorizontalAlignment="Left" Content="Billing Specialist: " />
+                            <ComboBox DisplayMemberPath="Name"
+                                      IsEnabled="{Binding EnablePicker,
+                                                          Mode=OneWay}"
+                                      ItemsSource="{Binding Specialists,
+                                                            ValidatesOnDataErrors=True,
+                                                            UpdateSourceTrigger=PropertyChanged}"
+                                      SelectedValue="{Binding SelectedSpecialist,
+                                                              ValidatesOnDataErrors=True,
+                                                              UpdateSourceTrigger=PropertyChanged}" />
+                        </DockPanel>
+
+                        <DockPanel Grid.Row="3"
+                                   Grid.ColumnSpan="2"
+                                   Visibility="{Binding Path=IsExpanded}">
+
+                            <Label x:Name="DeliveryMethod"
+                                   HorizontalAlignment="Left"
+                                   Content="Delivery Method: " />
+                            <ComboBox DisplayMemberPath="Descr"
+                                      IsEnabled="{Binding EnablePicker,
+                                                          Mode=OneWay}"
+                                      ItemsSource="{Binding Path=DeliveryMethods,
+                                                            ValidatesOnDataErrors=True,
+                                                            UpdateSourceTrigger=PropertyChanged}"
+                                      SelectedValue="{Binding SelectedDeliveryMethod,
+                                                              ValidatesOnDataErrors=True,
+                                                              UpdateSourceTrigger=PropertyChanged}" />
+                        </DockPanel>
+
+                        <DockPanel Grid.Row="4"
+                                   Grid.ColumnSpan="2"
+                                   Visibility="{Binding Path=IsExpanded}">
+
+                            <Label Grid.Column="0"
+                                   Width="60"
+                                   HorizontalAlignment="Left"
+                                   Content="Contract: " />
+                            <TextBox Grid.Column="1"
+                                     HorizontalAlignment="Stretch"
+                                     IsEnabled="{Binding EnablePicker,
+                                                         Mode=OneWay}"
+                                     PreviewMouseDown="Contract_MouseDown"
+                                     Text="{Binding ContractString,
+                                                    UpdateSourceTrigger=PropertyChanged}" />
+
+                        </DockPanel>
+
+                        <DockPanel Grid.Row="1" Grid.ColumnSpan="2">
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0"
+                                       HorizontalAlignment="Left"
+                                       Content="Search: " />
+                                <TextBox x:Name="Search"
+                                         Grid.Column="1"
+                                         IsEnabled="{Binding EnablePicker,
+                                                             Mode=OneWay}"
+                                         Text="{Binding SearchString,
+                                                        UpdateSourceTrigger=PropertyChanged}" />
+<!--
+                                <Button x:Name="Refresh"
+                                        Grid.Column="2"
+                                        BorderThickness="0"
+                                        OverridesDefaultStyle="True"
+                                        Style="{StaticResource ImageButton}"
+                                        Width="Auto"
+                                        Height="Auto"
+                                        HorizontalAlignment="Center"
+                                        Panel.ZIndex="999"
+                                        Command="{Binding SearchCommand}"
+                                        IsEnabled="{Binding EnablePicker,
+                                                            Mode=OneWay}"
+                                        ToolTip="Refresh">
+                                    <Image Source="Resources\refresh.png"/>
+                                </Button>
+-->
+                                <Button x:Name="Refresh"
+                                        Grid.Column="2"
+                                        BorderThickness="0"
+                                        Width="Auto"
+                                        Height="Auto"
+                                        HorizontalAlignment="Center"
+                                        Panel.ZIndex="999"
+                                        Command="{Binding SearchCommand}"
+                                        IsEnabled="{Binding EnablePicker,
+                                                            Mode=OneWay}"
+                                        ToolTip="Refresh">
+                                    <Image Source="Resources\refresh.png" />
+                                </Button>
+
+                                <Button x:Name="Expand"
+                                        Grid.Column="3"
+                                        HorizontalAlignment="Center"
+                                        Height="Auto"
+                                        Panel.ZIndex="999"
+                                        Command="{Binding ShowMoreCommand}"
+                                        IsEnabled="{Binding EnablePicker,
+                                                            Mode=OneWay}">
+                                    <Image Source="Resources\Expand.png" />
+
+                                </Button>
+                            </Grid>
+                        </DockPanel>
+
+                        <Grid x:Name="PopHeight"
+                              Grid.Row="0"
+                              Grid.RowSpan="4" />
+
+
+                    </Grid>
+
+                    <Popup x:Name="popLines"
+                           Width="{Binding Path=ActualWidth,
+                                           Mode=OneWay,
+                                           ElementName=TheList}"
+                           Height="{Binding Path=ActualHeight,
+                                            Mode=OneWay,
+                                            ElementName=PopHeight}"
+                           HorizontalAlignment="Right"
+                           AllowsTransparency="True"
+                           DataContext="ContractListViewModel"
+                           HorizontalOffset="0"
+                           IsOpen="False"
+                           Placement="Relative"
+                           PlacementTarget="{Binding ElementName=TheList}"
+                           PopupAnimation="None"
+                           StaysOpen="False"
+                           VerticalOffset="0">
+
+                        <Border HorizontalAlignment="Stretch"
+                                VerticalAlignment="Stretch"
+                                Background="Transparent"
+                                BorderBrush="#FF000000"
+                                BorderThickness="3"
+                                CornerRadius="5,5,5,5">
+                            <Border.Effect>
+                                <DropShadowEffect Opacity="0.8" Color="#FF666262" />
+                            </Border.Effect>
+
+                            <Grid Background="{StaticResource WindowBackgroundBrush}">
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="40" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+
+                                <Thumb Grid.Row="0"
+                                       Width="Auto"
+                                       Height="40"
+                                       Tag="{Binding ElementName=popLines}">
+                                    <Thumb.Template>
+                                        <ControlTemplate>
+                                            <Border Width="Auto"
+                                                    Height="20"
+                                                    VerticalAlignment="Top"
+                                                    Background="{StaticResource WindowBackgroundBrush}"
+                                                    BorderBrush="#FF000000"
+                                                    CornerRadius="5,5,0,0">
+                                                <Border.Effect>
+                                                    <DropShadowEffect Opacity="0.8" Color="#FF666262" />
+                                                </Border.Effect>
+
+                                                <Label Margin="0,-5,0,-5"
+                                                       Background="LightSalmon"
+                                                       Content="Contract"
+                                                       FontWeight="Bold"
+                                                       Foreground="Black"
+                                                       VerticalContentAlignment="Center" />
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Thumb.Template>
+                                </Thumb>
+
+                                <Grid Grid.Row="1"
+                                      Width="Auto"
+                                      Height="Auto"
+                                      Margin="0,0,0,10"
+                                      Background="{StaticResource WindowBackgroundBrush}">
+                                    <ContentControl Panel.ZIndex="999" Content="{Binding Path=DataContext.ContractPopped, Mode=TwoWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UserControl}}" />
+
+
+                                </Grid>
+
+
+                            </Grid>
+                        </Border>
+                    </Popup>
+
+
+                </Grid>
+
+            </Border>
+
+        </Grid>
+    </Grid>
+</UserControl>

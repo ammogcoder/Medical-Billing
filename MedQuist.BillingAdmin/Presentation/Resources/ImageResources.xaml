@@ -1,0 +1,10 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:presenter="clr-namespace:MedQuist.BillingAdmin.Presentation.ValueConverters;assembly=MedQuist.BillingAdmin.Presentation"
+                    xmlns:wintheme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero">
+
+
+    <ImageSource x:Key="KeyImage">pack://application:,,/Presentation/Resources/Images/Key.jpg</ImageSource>
+    <BitmapSource x:Key="ApplicationIcon">pack://application:,,/Presentation/Resources/Images/MedQuist.gif</BitmapSource>
+    
+</ResourceDictionary>

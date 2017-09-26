@@ -1,0 +1,434 @@
+﻿<UserControl x:Class="MedQuist.BillingAdmin.Presentation.InvoiceHistoryView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:converters="clr-namespace:MedQuist.BillingAdmin.Presentation.ValueConverters"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:helpers="clr-namespace:MedQuist.BillingAdmin.Presentation.Helpers"
+             xmlns:here="clr-namespace:MedQuist.BillingAdmin.Presentation"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             Background="{StaticResource WindowBackgroundBrush}"
+             d:DesignHeight="500"
+             d:DesignWidth="500"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <converters:EnumMatchToBooleanConverter x:Key="enumConverter" />
+        <Style x:Key="RowStyle" TargetType="{x:Type DataGridRow}">
+            <Setter Property="Background" Value="{StaticResource WindowBackgroundBrush}" />
+        </Style>
+        <Style x:Key="defaultCellStyle" TargetType="{x:Type DataGridCell}">
+            <Style.Triggers>
+                <Trigger Property="IsEditing" Value="true">
+                    <Setter Property="BorderBrush" Value="Red" />
+                    <Setter Property="BorderThickness" Value="2" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <!--
+            <Style TargetType="{x:Type Button}">
+            <Setter Property="Foreground" Value="White" />
+            </Style>
+        -->
+
+        <ControlTemplate x:Key="GlassButton" TargetType="{x:Type Button}">
+            <Border Background="Black"
+                    BorderBrush="Black"
+                    BorderThickness="1,1,1,1"
+                    CornerRadius="4,4,4,4">
+                <Grid>
+                    <Border x:Name="BorderUp"
+                            BorderThickness="2,2,2,2"
+                            CornerRadius="4,4,4,4">
+                        <Border.BorderBrush>
+                            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                <GradientStop Offset="0" Color="White" />
+                                <GradientStop Offset="1" Color="#222222" />
+                            </LinearGradientBrush>
+                        </Border.BorderBrush>
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint=".5,0" EndPoint=".5,1">
+                                <GradientStop Offset="0" Color="#aaaaff" />
+                                <GradientStop Offset="0.6" Color="#444466" />
+                                <GradientStop Offset="1" Color="#444444" />
+                            </LinearGradientBrush>
+                        </Border.Background>
+                    </Border>
+                    <Border x:Name="BorderDown"
+                            BorderThickness="2,2,2,2"
+                            CornerRadius="4,4,4,4"
+                            Opacity="0">
+                        <Border.BorderBrush>
+                            <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                                <GradientStop Offset="1" Color="White" />
+                                <GradientStop Offset="0" Color="#222222" />
+                            </LinearGradientBrush>
+                        </Border.BorderBrush>
+                        <Border.Background>
+                            <LinearGradientBrush StartPoint=".5,0" EndPoint=".5,1">
+                                <GradientStop Offset="0" Color="#aaaaff" />
+                                <GradientStop Offset="0.6" Color="#444466" />
+                                <GradientStop Offset="1" Color="#444444" />
+                            </LinearGradientBrush>
+                        </Border.Background>
+                    </Border>
+                    <ContentPresenter x:Name="Contents"
+                                      Width="Auto"
+                                      Margin="3,3,3,3"
+                                      HorizontalAlignment="Center"
+                                      VerticalAlignment="Center" />
+                </Grid>
+            </Border>
+            <ControlTemplate.Resources>
+                <Storyboard x:Key="MouseDownTimeLine">
+                    <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
+                                                   Storyboard.TargetName="BorderDown"
+                                                   Storyboard.TargetProperty="Opacity">
+                        <SplineDoubleKeyFrame KeyTime="00:00:00.05" Value="1" />
+                    </DoubleAnimationUsingKeyFrames>
+                    <ThicknessAnimationUsingKeyFrames BeginTime="00:00:00"
+                                                      Storyboard.TargetName="Contents"
+                                                      Storyboard.TargetProperty="Margin">
+                        <SplineThicknessKeyFrame KeyTime="00:00:00.025" Value="4,4,2,2" />
+                    </ThicknessAnimationUsingKeyFrames>
+                </Storyboard>
+                <Storyboard x:Key="MouseUpTimeLine">
+                    <DoubleAnimationUsingKeyFrames BeginTime="00:00:00"
+                                                   Storyboard.TargetName="BorderDown"
+                                                   Storyboard.TargetProperty="Opacity">
+                        <SplineDoubleKeyFrame KeyTime="00:00:00.25" Value="0" />
+                    </DoubleAnimationUsingKeyFrames>
+                    <ThicknessAnimationUsingKeyFrames BeginTime="00:00:00"
+                                                      Storyboard.TargetName="Contents"
+                                                      Storyboard.TargetProperty="Margin">
+                        <SplineThicknessKeyFrame KeyTime="00:00:00.25" Value="3,3,3,3" />
+                    </ThicknessAnimationUsingKeyFrames>
+                </Storyboard>
+            </ControlTemplate.Resources>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsPressed" Value="True">
+                    <Trigger.EnterActions>
+                        <BeginStoryboard Storyboard="{StaticResource MouseDownTimeLine}" />
+                    </Trigger.EnterActions>
+                    <Trigger.ExitActions>
+                        <BeginStoryboard Storyboard="{StaticResource MouseUpTimeLine}" />
+                    </Trigger.ExitActions>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+
+    </UserControl.Resources>
+
+    <Grid Background="{StaticResource WindowBackgroundBrush}">
+        <Grid x:Name="Loading"
+              Width="200"
+              Height="50"
+              HorizontalAlignment="Center"
+              VerticalAlignment="Center"
+              Panel.ZIndex="999"
+              Background="BurlyWood"
+              Visibility="{Binding Loading}">
+            <TextBlock HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       FontSize="18"
+                       FontWeight="Bold"
+                       Text="Loading..." />
+        </Grid>
+        <here:WPFMessageBox x:Name="MsgBox" Panel.ZIndex="9999" />
+        <Grid x:Name="MainGrid" Background="{StaticResource WindowBackgroundBrush}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height=".3*" />
+                <RowDefinition Height=".6*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width=".65*" />
+                    <ColumnDefinition Width=".35*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition />
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <CheckBox Margin="5,5,0,5"
+                              HorizontalAlignment="Left"
+                              IsChecked="{Binding ByRange}">
+                        By Range
+                    </CheckBox>
+
+                    <GroupBox Grid.Row="1"
+                              Margin="5"
+                              VerticalAlignment="Center"
+                              Header="{Binding SearchMethod}"
+                              IsEnabled="{Binding ByRange}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <DockPanel Grid.Row="0"
+                                       Grid.Column="1"
+                                       Height="Auto">
+                                <TextBlock Height="Auto"
+                                           Margin="5,5,5,0"
+                                           Text="From" />
+                                <DatePicker Grid.Row="1"
+                                            Grid.Column="1"
+                                            Width="100"
+                                            Height="Auto"
+                                            HorizontalAlignment="Right"
+                                            Background="{StaticResource WindowBackgroundBrush}"
+                                            SelectedDate="{Binding FromDate}" />
+                            </DockPanel>
+                            <DockPanel Grid.Row="1" Grid.Column="1">
+                                <TextBlock Margin="5,5,5,0" Text="Through" />
+                                <DatePicker Width="100"
+                                            MinWidth="100"
+                                            HorizontalAlignment="Right"
+                                            Background="{StaticResource WindowBackgroundBrush}"
+                                            IsHitTestVisible="{Binding ByRange}"
+                                            SelectedDate="{Binding ToDate}" />
+                            </DockPanel>
+
+                        </Grid>
+                    </GroupBox>     
+                    <CheckBox Grid.Row="2"
+                              Margin="5,5,0,5"
+                              HorizontalAlignment="Left"
+                              IsChecked="{Binding OnlyThisGroup,
+                                                  UpdateSourceTrigger=PropertyChanged}"
+                              IsHitTestVisible="{Binding EnableOnlyThisGroup,
+                                                  UpdateSourceTrigger=PropertyChanged,
+                                                  Mode=OneWay}">
+                        Only Selected Group
+                    </CheckBox>
+
+                    <Button Grid.Row="3"
+                            Width="Auto"
+                            HorizontalAlignment="Left"
+                            Command="{Binding RefreshCommand}"
+                            Content="Refresh" />
+                </Grid>
+                <!--    -->
+                <Grid Grid.Row="1" Grid.RowSpan="3">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Row="0"
+                              Grid.Column="1"
+                              Height="Auto">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+
+                                <ColumnDefinition Width="100" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0"
+                                       Margin="5,5,5,0"
+                                       Text="From" />
+                            <DatePicker Grid.Column="1"
+                                        Width="100"
+                                        Height="Auto"
+                                        HorizontalAlignment="Right"
+                                        Background="{StaticResource WindowBackgroundBrush}"
+                                        IsEnabled="{Binding EnableBatch}"
+                                        SelectedDate="{Binding FromDateAll}" />
+                        </Grid>
+                        <Grid Grid.Row="0"
+                              Grid.Column="2"
+                              Height="Auto">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="100" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Height="Auto"
+                                       Margin="5,5,5,0"
+                                       Text="To" />
+                            <DatePicker Grid.Column="1"
+                                        Height="Auto"
+                                        HorizontalAlignment="Right"
+                                        Background="{StaticResource WindowBackgroundBrush}"
+                                        IsEnabled="{Binding EnableBatch}"
+                                        SelectedDate="{Binding ToDateAll}" />
+                        </Grid>
+                    </Grid>
+                    <DataGrid x:Name="batches"
+                              Grid.Row="1"
+                              HorizontalAlignment="Stretch"
+                              AutoGenerateColumns="False"
+                              Background="{StaticResource WindowBackgroundBrush}"
+                              CellStyle="{StaticResource defaultCellStyle}"
+                              IsEnabled="{Binding EnableBatch}"
+                              IsReadOnly="True"
+                              ItemsSource="{Binding InvoiceCounts}"
+                              RowStyle="{StaticResource RowStyle}"
+                              ScrollViewer.VerticalScrollBarVisibility="Auto"
+                              SelectedItem="{Binding SelectedInvoiceCount}"
+                              SelectionMode="Single"
+                              SelectionUnit="FullRow">
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn Header="From">
+                                <DataGridTemplateColumn.CellEditingTemplate>
+                                    <DataTemplate>
+                                        <DatePicker BorderThickness="0" SelectedDate="{Binding Path=BILL_PERIOD_START, Mode=TwoWay}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellEditingTemplate>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock>
+                                            <TextBlock.Text>
+                                                <Binding ConverterCulture="en-US"
+                                                         Path="BILL_PERIOD_START"
+                                                         StringFormat="{}{0:MM/dd/yyyy}" />
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <DataGridTemplateColumn Header="Through">
+                                <DataGridTemplateColumn.CellEditingTemplate>
+                                    <DataTemplate>
+                                        <DatePicker BorderThickness="0" SelectedDate="{Binding Path=BILL_PERIOD_END_BEFORE, Mode=TwoWay}" />
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellEditingTemplate>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock>
+                                            <TextBlock.Text>
+                                                <Binding ConverterCulture="en-US"
+                                                         Path="BILL_PERIOD_END_BEFORE"
+                                                         StringFormat="{}{0:MM/dd/yyyy}" />
+                                            </TextBlock.Text>
+                                        </TextBlock>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTextColumn Width="*"
+                                                Binding="{Binding Path=COUNT}"
+                                                Header="# of Bill" />
+
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
+            </Grid>
+
+
+            <DataGrid x:Name="invoices"
+                      Grid.Row="2"
+                      HorizontalAlignment="Stretch"
+                      AutoGenerateColumns="False"
+                      Background="{StaticResource WindowBackgroundBrush}"
+                      CellStyle="{StaticResource defaultCellStyle}"
+                      helpers:DataGridMultipleSelection.SelectedItemsSource="{Binding SelectedInvoices,
+                                                                                      UpdateSourceTrigger=PropertyChanged}"
+                      IsReadOnly="True"
+                      ItemsSource="{Binding Invoices}"
+                      RowStyle="{StaticResource RowStyle}"
+                      SelectedValue="{Binding SelectedInvoice}"
+                      SelectionMode="Extended">
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn Width="Auto"
+                                        Binding="{Binding Path=DESCR}"
+                                        Header="Name" />
+                    <DataGridTextColumn Width="Auto"
+                                        Binding="{Binding Path=INVOICE_GRP_ID}"
+                                        Header="Grp #" />
+                    <DataGridTextColumn Width="Auto"
+                                        Binding="{Binding Path=INVOICE_ID}"
+                                        Header="Inv #" />
+                    <DataGridTextColumn Width="Auto"
+                                        Binding="{Binding Path=BILL_PERIOD_START}"
+                                        Header="Begin" />
+                    <DataGridTextColumn Width="Auto"
+                                        Binding="{Binding Path=BILL_PERIOD_END_BEFORE}"
+                                        Header="Through" />
+                    <DataGridTextColumn Width="Auto"
+                                        Binding="{Binding Path=LINE_ITEM_TOTAL}"
+                                        Header="Amount" />
+                    <DataGridTextColumn Width="Auto"
+                                        Binding="{Binding Path=EXPORTED_TO_GL_ON}"
+                                        Header="Exp to GL" />
+                    <DataGridTextColumn Width="*"
+                                        Binding="{Binding Path=ERR_MSG}"
+                                        Header="Error Message" />
+
+                </DataGrid.Columns>
+            </DataGrid>
+            <GroupBox Grid.Row="3"
+                      Grid.Column="0"
+                      Header="Files (if applicable to chosen action)">
+                <DockPanel>
+                    <RadioButton Width="Auto"
+                                 Height="Auto"
+                                 Margin="10,5,0,10"
+                                 Content="Bill only"
+                                 GroupName="FilterRadio"
+                                 IsChecked="{Binding Path=ReportType,
+                                                     Mode=TwoWay,
+                                                     Converter={StaticResource enumConverter},
+                                                     ConverterParameter=BillOnly,
+                                                     UpdateSourceTrigger=PropertyChanged}" />
+                    <RadioButton Width="Auto"
+                                 Height="Auto"
+                                 Margin="10,5,0,10"
+                                 Content="Detail only"
+                                 GroupName="FilterRadio"
+                                 IsChecked="{Binding Path=ReportType,
+                                                     Mode=TwoWay,
+                                                     Converter={StaticResource enumConverter},
+                                                     ConverterParameter=DetailOnly,
+                                                     UpdateSourceTrigger=PropertyChanged}" />
+                    <RadioButton Width="Auto"
+                                 Height="Auto"
+                                 Margin="10,5,0,10"
+                                 Content="Bill and detail"
+                                 GroupName="FilterRadio"
+                                 IsChecked="{Binding Path=ReportType,
+                                                     Mode=TwoWay,
+                                                     Converter={StaticResource enumConverter},
+                                                     ConverterParameter=BillAndDetail,
+                                                     UpdateSourceTrigger=PropertyChanged}" />
+                </DockPanel>
+            </GroupBox>
+            <DockPanel Grid.Row="4">
+                <Button Width="Auto"
+                        Command="{Binding PrintCommand}"
+                        Content="Print" />
+                <Button Width="Auto"
+                        Command="{Binding ViewCommand}"
+                        Content="View" />
+                <ComboBox Width="150" ItemsSource="{Binding Printers}" />
+                <Button Width="Auto" Content="Copy" />
+                <Button Width="Auto" Content="Mail" />
+                <Button Width="Auto"
+                        HorizontalAlignment="Left"
+                        Content="Transfer" />
+            </DockPanel>
+            <!--    -->
+        </Grid>
+    </Grid>
+</UserControl>

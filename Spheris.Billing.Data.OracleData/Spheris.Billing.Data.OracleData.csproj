@@ -1,0 +1,204 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{78C5A24E-013D-4E0E-A1C2-C35E2785711B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Spheris.Billing.Data.OracleData</RootNamespace>
+    <AssemblyName>Spheris.Billing.Data.OracleData</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <SignAssembly>false</SignAssembly>
+    <AssemblyOriginatorKeyFile>SpherisFinance.pfx</AssemblyOriginatorKeyFile>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <PublishUrl>http://localhost/Spheris.Billing.Data.OracleData/</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <NoWarn>618</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;ORACLEx</DefineConstants>
+    <NoWarn>618</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE;ORACLE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.OracleClient" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="OracleActiveScheduleRepository.cs" />
+    <Compile Include="OracleAddOnChgSchedRepository.cs" />
+    <Compile Include="OracleAddOnChgTypeRepository.cs" />
+    <Compile Include="OracleAdjTypeRepository.cs" />
+    <Compile Include="OracleBatchJobTypeRepository.cs" />
+    <Compile Include="OracleBillingSpecialistRepository.cs" />
+    <Compile Include="OracleBrandRepository.cs" />
+    <Compile Include="OracleChargeMethodRepository.cs" />
+    <Compile Include="OracleClientLocationRepository.cs" />
+    <Compile Include="OracleContractRateAltRepository.cs" />
+    <Compile Include="OracleContractRateRepository.cs" />
+    <Compile Include="OracleContractRepository.cs" />
+    <Compile Include="OracleContractTatSchedRepository.cs" />
+    <Compile Include="OracleContractVolumeEvtRepository.cs" />
+    <Compile Include="OracleDeliveryMethodsRepositoryBase.cs" />
+    <Compile Include="OracleClientErrorTypeRepository.cs" />
+    <Compile Include="OracleErrClientWorkTypeRepository.cs" />
+    <Compile Include="OracleErrNoValidContractRepository.cs" />
+    <Compile Include="OracleExtSysRepository.cs" />
+    <Compile Include="OracleExtWorkTypeSourceRepository.cs" />
+    <Compile Include="OracleFaxCompMethodRepository.cs" />
+    <Compile Include="OracleFreqRepository.cs" />
+    <Compile Include="OracleInvoiceDetailRepository.cs" />
+    <Compile Include="OracleInvoiceGroupRepository.cs" />
+    <Compile Include="OracleInvoiceGrpOverrideRepository.cs" />
+    <Compile Include="OracleInvoiceGrpReportRepository.cs" />
+    <Compile Include="OracleInvoiceGrpStatusRepository.cs" />
+    <Compile Include="OracleInvoiceRepository.cs" />
+    <Compile Include="OracleInvoiceStatusRepository.cs" />
+    <Compile Include="OracleInvoiceStyleRepository.cs" />
+    <Compile Include="OracleOverRideKeySourceRepository.cs" />
+    <Compile Include="OraclePaymentTermsRepository.cs" />
+    <Compile Include="OraclePlatformRepository.cs" />
+    <Compile Include="OracleQtyRuleRepository.cs" />
+    <Compile Include="OracleRemitToRepository.cs" />
+    <Compile Include="OracleReportTypeRepository.cs" />
+    <Compile Include="OracleScopeRuleRepository.cs" />
+    <Compile Include="OracleStatCompMethodRepository.cs" />
+    <Compile Include="OracleExtWorkTypeRepository.cs" />
+    <Compile Include="OracleInvoiceDetailReportTypeQuery.cs" />
+    <Compile Include="OracleInvoiceGroupReportsInfoQuery.cs" />
+    <Compile Include="OracleInvoiceReportAddOnChargesQuery.cs" />
+    <Compile Include="OracleInvoiceReportParametersQuery.cs" />
+    <Compile Include="OracleInvoiceReportTranscriptionLinesQuery.cs" />
+    <Compile Include="OracleInvoiceStyleColumnRepository.cs" />
+    <Compile Include="OracleAuditLogDal.cs" />
+    <Compile Include="OracleBatchJobRepository.cs" />
+    <Compile Include="OracleContractNoteRepository.cs" />
+    <Compile Include="OracleInvoiceDetailFileTypeDal.cs" />
+    <Compile Include="OracleDataFactory.cs" />
+    <Compile Include="OracleHelper.cs" />
+    <Compile Include="OracleTatCompMethodRepository.cs" />
+    <Compile Include="OracleTatRateRepository.cs" />
+    <Compile Include="OracleTatSchedRepository.cs" />
+    <Compile Include="OracleUserDal.cs" />
+    <Compile Include="OracleVolumeEvtRateRepository.cs" />
+    <Compile Include="OracleVolumeEvtTypeRepository.cs" />
+    <Compile Include="OracleWorkUnitRepository.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Spheris.Billing.Core\Spheris.Billing.Core.csproj">
+      <Project>{7B94EB5A-835C-4C27-9704-C599C2B52428}</Project>
+      <Name>Spheris.Billing.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Spheris.Billing.Data\Spheris.Billing.Data.csproj">
+      <Project>{75DB9F36-16BD-4CFD-AE0A-B2A8346CC0B7}</Project>
+      <Name>Spheris.Billing.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Spheris.Common\Spheris.Common.csproj">
+      <Project>{BE3ED2F1-54FA-4B2F-924A-5C98FCBC7261}</Project>
+      <Name>Spheris.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SpherisFinance.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

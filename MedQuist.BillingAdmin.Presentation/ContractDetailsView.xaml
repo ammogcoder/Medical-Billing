@@ -1,0 +1,354 @@
+﻿<UserControl x:Class="MedQuist.BillingAdmin.Presentation.ContractDetailsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:helpers="clr-namespace:MedQuist.BillingAdmin.Presentation.Helpers"
+             xmlns:this="clr-namespace:MedQuist.BillingAdmin.Presentation"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             Background="{StaticResource WindowBackgroundBrush}"
+             d:DesignHeight="300"
+             d:DesignWidth="300">
+    <Grid>
+
+        <this:WPFMessageBox Panel.ZIndex="9999"
+                            x:Name="MsgBox" />
+
+        
+        <Grid x:Name="MainGrid">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Button Name="Delete"
+                        Command="{Binding DeleteCommand}"
+                        Content="Delete"
+                        Grid.Column="0"></Button>
+                <Button Name="Restore"
+                        Command="{Binding RestoreCommand}"
+                        Content="Cancel"
+                        Grid.Column="1"></Button>
+                <Button Name="addnew"
+                        Command="{Binding AddNewCommand}"
+                        Content="Add New"
+                        Grid.Column="2"></Button>
+                <Button Name="save"
+                        Command="{Binding SaveCommand}"
+                        Content="Save"
+                        Grid.Column="3"></Button>
+            </Grid>
+
+            <Grid Grid.Row="1"
+                  helpers:EnterKeyTraversal.IsEnabled="True">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Label Content="Contract Name:"
+                       Grid.Row="0"
+                       Grid.Column="0">
+                </Label>
+                <TextBox Text="{Binding CurrentContract.DESCR,ValidatesOnDataErrors=True,UpdateSourceTrigger=PropertyChanged}"
+                         Grid.Row="0"
+                         IsEnabled="{Binding IsValid}"
+                         Grid.Column="1"></TextBox>
+
+                <Label Content="Payment Terms:"
+                       Grid.Row="1"
+                       Grid.Column="0">
+                </Label>
+                <ComboBox ItemsSource="{Binding PaymentTermList}"
+                          Grid.Row="1"
+                          IsEnabled="{Binding IsValid}"
+                          SelectedValue="{Binding SelectedPaymentTerm,ValidatesOnDataErrors=True,UpdateSourceTrigger=PropertyChanged}"
+                          DisplayMemberPath="DESCR"
+                          Grid.Column="1"></ComboBox>
+
+                <Label Content="Display rate on invoice:"
+                       Grid.Column="0"
+                       Grid.Row="2" />
+                <CheckBox IsChecked="{Binding CurrentContract.DISPLAY_STD_RATE_ON_INVOICE,ValidatesOnDataErrors=True,UpdateSourceTrigger=PropertyChanged}"
+                          IsEnabled="{Binding IsValid}"
+                          Tag="Tag"
+                          Grid.Row="2"
+                          Grid.Column="1"
+                          VerticalAlignment="Center" />
+
+                <Grid Grid.Column="1"
+                      HorizontalAlignment="Right"
+                      Grid.Row="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Label Content="Grace period"
+                           Grid.Column="0" />
+                    <TextBox Text="{Binding CurrentContract.PAYMENT_GRACE_PERIOD,ValidatesOnDataErrors=True,UpdateSourceTrigger=PropertyChanged}"
+                             Grid.Column="1"
+                             IsEnabled="{Binding IsValid}"
+                             Width="25"
+                             HorizontalAlignment="Left" />
+                </Grid>
+
+
+            </Grid>
+
+            <Grid Grid.Row="3"
+                  Margin="0,5,0,0"
+                  Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Column="0"
+                       Width="Auto"
+                       FontWeight="Bold"
+                       Content="Invoice Groups Assigned to this Contract" />
+                <Button x:Name="unassignlocation"
+                        Command="{Binding RemoveGroupsCommand}"
+                        Margin="3,0,3,0"
+                        IsEnabled="{Binding IsNotAddingNew,Mode=OneWay}"
+                        Width="Auto"
+                        HorizontalAlignment="Right"
+                        Content="Remove"
+                        Grid.Column="1"></Button>
+                <Button Content="Add"
+                        Width="Auto"
+                        IsEnabled="{Binding IsNotAddingNew,Mode=OneWay}"
+                        HorizontalAlignment="Right"
+                        Grid.Column="2"
+                        Command="{Binding PopCommand}" />
+
+            </Grid>
+
+            <!-- helpers:ListBoxHelper.SelectedItems="{Binding SelectedGroups, UpdateSourceTrigger=PropertyChanged}"  -->
+            <ListBox Grid.Row="4"
+                     Grid.Column="0"
+                     x:Name="ListOf"
+                     IsEnabled="{Binding IsNotAddingNew,Mode=OneWay}"
+                     ItemsSource="{Binding GroupsAssigned}"
+                     DisplayMemberPath="Description" />
+            <Separator Grid.ColumnSpan="2"
+                       Grid.Row="2"
+                       Height="5"
+                       HorizontalAlignment="Stretch"
+                       Name="separator1"
+                       VerticalAlignment="Top" />
+            <Popup x:Name="popLines"
+                   Grid.Row="4"
+                   PlacementTarget="{Binding ElementName=ListOf}"
+                   Placement="Relative"
+                   IsOpen="{Binding PopSwitch, Mode=TwoWay}"
+                   Width="{Binding Path=ActualWidth, Mode=OneWay, ElementName=ListOf}"
+                   Height="{Binding Path=ActualHeight, Mode=OneWay, ElementName=ListOf}"
+                   AllowsTransparency="True"
+                   StaysOpen="False"
+                   PopupAnimation="None"
+                   HorizontalAlignment="Right"
+                   HorizontalOffset="0"
+                   VerticalOffset="0">
+
+                <Border Background="Transparent"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        BorderBrush="#FF000000"
+                        BorderThickness="3"
+                        CornerRadius="5,5,5,5">
+                    <Border.Effect>
+                        <DropShadowEffect Color="#FF666262"
+                                          Opacity="0.8" />
+                    </Border.Effect>
+
+                    <Grid Background="{StaticResource WindowBackgroundBrush}">
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <Thumb Grid.Row="0"
+                               Width="Auto"
+                               Height="40"
+                               Tag="{Binding ElementName=popLines}"
+                               helpers:PopupBehaviours.IsMoveEnabledProperty="true">
+                            <Thumb.Template>
+                                <ControlTemplate>
+                                    <Border Width="Auto"
+                                            Height="20"
+                                            BorderBrush="#FF000000"
+                                            Background="{StaticResource WindowBackgroundBrush}"
+                                            VerticalAlignment="Top"
+                                            CornerRadius="5,5,0,0">
+                                        <Border.Effect>
+                                            <DropShadowEffect Color="#FF666262"
+                                                              Opacity="0.8" />
+                                        </Border.Effect>
+
+                                        <Label Content="Invoice Groups"
+                                               Background="LightSalmon"
+                                               FontWeight="Bold"
+                                               Foreground="Black"
+                                               VerticalContentAlignment="Center"
+                                               Margin="0,-5,0,-5" />
+                                    </Border>
+                                </ControlTemplate>
+                            </Thumb.Template>
+                        </Thumb>
+
+                        <Grid Grid.Row="1"
+                              Background="{StaticResource WindowBackgroundBrush}"
+                              Width="Auto"
+                              Height="Auto"
+                              Margin="0,0,0,10">
+
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <TextBlock Text="IG not assigned to any contract"
+                                           Grid.Row="0">
+                                </TextBlock>
+
+                                <!-- helpers:ListBoxHelper.SelectedItems="{Binding SelectedGroups, UpdateSourceTrigger=PropertyChanged}" -->
+                                
+                           
+                                <ListBox SelectionMode="Extended"
+                                         Grid.Row="1"
+                                         x:Name="LocListNot"
+                                         Background="{StaticResource WindowBackgroundBrush}"
+                                         ItemsSource="{Binding NotAssignedGroups}"
+                                         DisplayMemberPath="Description"
+                                         SelectedValue="{Binding SelectedGroup,ValidatesOnDataErrors=True, UpdateSourceTrigger=PropertyChanged}"
+                                         helpers:ListBoxHelper.SelectedItems="{Binding SelectedGroups, UpdateSourceTrigger=PropertyChanged}">
+                                </ListBox>
+                                <Button Content="Add"
+                                        HorizontalAlignment="Center"
+                                        Width="Auto"
+                                        Grid.Row="2"
+                                        Command="{Binding AddGroupsCommand}" />
+                              
+                            </Grid>
+
+                        </Grid>
+
+
+                    </Grid>
+                </Border>
+            </Popup>            
+            <!-- DOESN'T MAKE SENSE
+            <Popup x:Name="popLines"
+                   DataContext="InvoiceGrpViewModel"
+                   Grid.Row="4"
+                   PlacementTarget="{Binding ElementName=ListOf}"
+                   Placement="Relative"
+                   IsOpen="{Binding PopSwitch, Mode=TwoWay}"
+                   Width="{Binding Path=ActualWidth, Mode=OneWay, ElementName=MainGrid}"
+                   Height="{Binding Path=ActualHeight, Mode=OneWay, ElementName=PopHolder}"
+                   AllowsTransparency="True"
+                   StaysOpen="False"
+                   PopupAnimation="None"
+                   HorizontalAlignment="Right"
+                   HorizontalOffset="0"
+                   VerticalOffset="0">
+
+                <Border Background="Transparent"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Stretch"
+                        BorderBrush="#FF000000"
+                        BorderThickness="3"
+                        CornerRadius="5,5,5,5">
+                    <Border.Effect>
+                        <DropShadowEffect Color="#FF666262"
+                                          Opacity="0.8" />
+                    </Border.Effect>
+
+                    <Grid Background="{StaticResource WindowBackgroundBrush}">
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <Thumb Grid.Row="0"
+                               Width="Auto"
+                               Height="40"
+                               Tag="{Binding ElementName=popLines}"
+                               helpers:PopupBehaviours.IsMoveEnabledProperty="true">
+                            <Thumb.Template>
+                                <ControlTemplate>
+                                    <Border Width="Auto"
+                                            Height="20"
+                                            BorderBrush="#FF000000"
+                                            Background="{StaticResource WindowBackgroundBrush}"
+                                            VerticalAlignment="Top"
+                                            CornerRadius="5,5,0,0">
+                                        <Border.Effect>
+                                            <DropShadowEffect Color="#FF666262"
+                                                              Opacity="0.8" />
+                                        </Border.Effect>
+
+                                        <Label Content="Add Client Locations "
+                                               Background="LightSalmon"
+                                               FontWeight="Bold"
+                                               Foreground="Black"
+                                               VerticalContentAlignment="Center"
+                                               Margin="0,-5,0,-5" />
+                                    </Border>
+                                </ControlTemplate>
+                            </Thumb.Template>
+                        </Thumb>
+
+                        <Grid Grid.Row="1"
+                              Background="{StaticResource WindowBackgroundBrush}"
+                              Width="Auto"
+                              Height="Auto"
+                              Margin="0,0,0,10">
+
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <this:InvoiceGroupView x:Name="invoiceGroupView"
+                                                       Grid.Row="1" />
+
+                            </Grid>
+
+                        </Grid>
+
+
+                    </Grid>
+                </Border>
+            </Popup>
+            -->
+        </Grid>
+    </Grid>
+</UserControl>

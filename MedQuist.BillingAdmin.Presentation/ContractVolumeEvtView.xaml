@@ -1,0 +1,190 @@
+﻿<UserControl x:Class="MedQuist.BillingAdmin.Presentation.ContractVolumeEvtView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:here="clr-namespace:MedQuist.BillingAdmin.Presentation"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             Background="{StaticResource WindowBackgroundBrush}"
+             d:DesignHeight="300"
+             d:DesignWidth="300"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <Style x:Key="RowStyle" TargetType="{x:Type DataGridRow}">
+            <Setter Property="Background" Value="{StaticResource WindowBackgroundBrush}" />
+        </Style>
+
+        <Style x:Key="defaultCellStyle" TargetType="{x:Type DataGridCell}">
+
+            <Style.Triggers>
+                <Trigger Property="IsEditing" Value="true">
+                    <Setter Property="BorderBrush" Value="Red" />
+                    <Setter Property="BorderThickness" Value="2" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+    </UserControl.Resources>
+    <Grid>
+        <here:WPFMessageBox x:Name="MsgBox" Panel.ZIndex="9999" />
+
+        <Grid x:Name="MainGrid">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+                <RowDefinition Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <Label Grid.Row="0"
+                   Grid.Column="0"
+                   HorizontalAlignment="Center"
+                   Content="Volume Based Adjustments"
+                   FontSize="16"
+                   FontWeight="Bold" />
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Button Grid.Column="0"
+                        Width="Auto"
+                        Height="Auto"
+                        HorizontalAlignment="Right"
+                        Command="{Binding SaveCommand}"
+                        Content="Save" />
+                <Button Grid.Column="1"
+                        Width="Auto"
+                        HorizontalAlignment="Left"
+                        Command="{Binding CancelCommand}"
+                        Content="Cancel" />
+            </Grid>
+            <DataGrid x:Name="VBAGrid"
+                      Grid.Row="2"
+                      Grid.Column="0"
+                      HorizontalAlignment="Stretch"
+                      AutoGenerateColumns="False"
+                      CanUserAddRows="True"
+                      CanUserDeleteRows="True"
+                      CellStyle="{StaticResource defaultCellStyle}"
+                      IsHitTestVisible="{Binding AreRatesClean}"
+                      ItemsSource="{Binding ContractVolumeEvts}"
+                      RowStyle="{StaticResource RowStyle}"
+                      SelectedValue="{Binding SelectedContractVolumeEvt}"
+                      SelectionMode="Single">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="Type">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <ComboBox x:Name="EvtCombo"
+                                          Background="{StaticResource WindowBackgroundBrush}"
+                                          DisplayMemberPath="DESCR"
+                                          IsReadOnly="True"
+                                          ItemsSource="{Binding Path=DataContext.VolumeEvtTypes,
+                                                                RelativeSource={RelativeSource FindAncestor,
+                                                                                               AncestorType={x:Type UserControl}},
+                                                                UpdateSourceTrigger=PropertyChanged,
+                                                                Mode=OneWay}"
+                                          SelectedValue="{Binding volumeEvtType,
+                                                                  UpdateSourceTrigger=PropertyChanged}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTemplateColumn Header="Begin On">
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <DatePicker BorderThickness="0" SelectedDate="{Binding Path=STARTS_ON, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock>
+                                    <TextBlock.Text>
+                                        <Binding ConverterCulture="en-US"
+                                                 Path="STARTS_ON"
+                                                 StringFormat="{}{0:MM/dd/yyyy}"
+                                                 UpdateSourceTrigger="PropertyChanged" />
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+
+
+                    <DataGridTemplateColumn Header="End After">
+                        <DataGridTemplateColumn.CellEditingTemplate>
+                            <DataTemplate>
+                                <DatePicker BorderThickness="0" SelectedDate="{Binding Path=ENDS_AFTER, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellEditingTemplate>
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock>
+                                    <TextBlock.Text>
+                                        <Binding ConverterCulture="en-US"
+                                                 Path="ENDS_AFTER"
+                                                 StringFormat="{}{0:MM/dd/yyyy}"
+                                                 UpdateSourceTrigger="PropertyChanged" />
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <!--    -->
+
+
+                    <DataGridTemplateColumn Header="Includes Stat ">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox x:Name="EvtTally"
+                                          Width="600"
+                                          Background="{StaticResource WindowBackgroundBrush}"
+                                          IsChecked="{Binding TALLY_STAT,
+                                                              UpdateSourceTrigger=PropertyChanged,
+                                                              Mode=TwoWay}"
+                                          IsThreeState="False" />
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <!--
+                        <DataGridTextColumn Header="Includes Stat"
+                        Width="100"
+                        Binding="{Binding Path=TALLY_STAT,UpdateSourceTrigger=PropertyChanged}" />
+                    -->
+                </DataGrid.Columns>
+            </DataGrid>
+            <Label Grid.Row="3"
+                   Grid.ColumnSpan="2"
+                   HorizontalAlignment="Center"
+                   Content="Rates"
+                   FontSize="16"
+                   FontWeight="Bold" />
+            <DataGrid Grid.Row="4"
+                      Grid.Column="0"
+                      HorizontalAlignment="Stretch"
+                      AutoGenerateColumns="False"
+                      CanUserAddRows="True"
+                      CanUserDeleteRows="True"
+                      CellStyle="{StaticResource defaultCellStyle}"
+                      ItemsSource="{Binding VolumeEvtRates}"
+                      RowStyle="{StaticResource RowStyle}"
+                      SelectionMode="Single">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding TIER}" Header="Tier" />
+                    <DataGridTextColumn Binding="{Binding ADJ}" Header="Std" />
+                    <DataGridTextColumn Binding="{Binding ADJ_OFFSHORE}" Header="Offshore" />
+                    <DataGridTextColumn Binding="{Binding ADJ_SR}" Header="Speech" />
+                    <DataGridTextColumn Binding="{Binding ADJ_SR_OFFSHORE}" Header="Offshore w/SR" />
+                    <DataGridTextColumn Binding="{Binding ADJ_INHOUSE}" Header="In-house" />
+                    <DataGridTextColumn Width="*"
+                                        Binding="{Binding ADJ_SR_INHOUSE}"
+                                        Header="In-house w/SR" />
+
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </Grid>
+</UserControl>

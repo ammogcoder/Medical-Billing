@@ -1,0 +1,15 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="BillingAdmin.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="UserName" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Database" Type="System.String" Scope="User">
+      <Value Profile="(Default)">SBPROD</Value>
+    </Setting>
+    <Setting Name="DefaultBillPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)"> \\tncifs8206\finance\Customer Files</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

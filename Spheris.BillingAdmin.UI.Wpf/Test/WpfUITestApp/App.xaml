@@ -1,0 +1,82 @@
+﻿<Application x:Class="WpfUITestApp.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <SolidColorBrush x:Key="SpherisLightBlue" Color="#FF4E78B4" Opacity="1" />
+        <SolidColorBrush x:Key="SpherisDarkBlue" Color="#FF154F99" Opacity="1" />
+        <SolidColorBrush x:Key="LabelForegroundBrush" Color="Orange" />
+
+        <!--specifies a corner radius to use throughout this page-->
+        <CornerRadius x:Key="BorderRadii">5</CornerRadius>
+
+        <!--specifies the default style/control template of all PasswordBoxes-->
+        <Style TargetType="{x:Type PasswordBox}">
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Background" Value="Azure"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type PasswordBox}">
+                        <!--note this border with associated corner radius-->
+                        <Border Name="Border" CornerRadius="{StaticResource BorderRadii}" 
+                                Padding="2" BorderThickness="1" Background="{StaticResource SpherisLightBlue}">
+                            <ScrollViewer SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" 
+                                          x:Name="PART_ContentHost"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!--specifies the default style/control template of all textboxes-->
+        <!--
+        <Style TargetType="{x:Type TextBox}">
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Background" Value="Azure"/>
+            <Setter Property="IsReadOnly" Value="False"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Border Name="Border" CornerRadius="{StaticResource BorderRadii}" Padding="2" BorderThickness="1" Background="{StaticResource SpherisLightBlue}">
+                            <ScrollViewer SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" x:Name="PART_ContentHost"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+-->
+        <!--specifies the default style/control template of all textboxes-->
+
+<!--        <Style TargetType="{x:Type ListBox}">
+
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Background" Value="Azure"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListBox}">
+                        <Border Name="Border" 
+                            CornerRadius="{StaticResource BorderRadii}" 
+                            Padding="2" BorderThickness="1" Background="{StaticResource SpherisLightBlue}">
+                            <ScrollViewer SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" x:Name="PART_ContentHost"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+-->
+        <LinearGradientBrush x:Key="WindowBackgroundBrush">
+            <GradientStop Color="#FF154F99" Offset="0"/>
+            <GradientStop Color="#FF4E78B4" Offset="1"/>
+        </LinearGradientBrush>
+
+    </Application.Resources>
+</Application>

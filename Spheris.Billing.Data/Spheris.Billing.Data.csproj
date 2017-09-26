@@ -1,0 +1,259 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{75DB9F36-16BD-4CFD-AE0A-B2A8346CC0B7}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Spheris.Billing.Data</RootNamespace>
+    <AssemblyName>Spheris.Billing.Data</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <SignAssembly>false</SignAssembly>
+    <AssemblyOriginatorKeyFile>SpherisFinance.pfx</AssemblyOriginatorKeyFile>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <PublishUrl>http://localhost/Spheris.Billing.Data/</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UIAutomationProvider">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AuditLogDal.cs" />
+    <Compile Include="BatchJobRepository.cs" />
+    <Compile Include="BillingDataFactory.cs" />
+    <Compile Include="ConnectionString.cs" />
+    <Compile Include="DalBridge.cs" />
+    <Compile Include="DataHelper.cs" />
+    <Compile Include="DatabaseObject.cs" />
+    <Compile Include="ExternalUserSecurityQuestionsDal.cs" />
+    <Compile Include="IAccessSettings.cs" />
+    <Compile Include="InvoiceDetailFileTypeDal.cs" />
+    <Compile Include="RepositoryBases\ActiveScheduleRepositoryBase.cs" />
+    <Compile Include="RepositoryBases\AddOnChgSchedRepositoryBase.cs" />
+    <Compile Include="RepositoryBases\AddOnChgTypeRepositoryBase.cs" />
+    <Compile Include="RepositoryBases\AdjTypeRepositoryBase.cs" />
+    <Compile Include="RepositoryBases\BatchJobTypeRepositoryBase.cs" />
+    <Compile Include="RepositoryBases\BillingSpecialistRepositoryBase.cs" />
+    <Compile Include="RepositoryBases\BrandsRepositoryBase.cs" />
+    <Compile Include="RepositoryBases\ChargeMethodRepositoryBase.cs" />
+    <Compile Include="RepositoryBases\ClientLocationRepositoryBase.cs" />
+    <Compile Include="RepositoryBases\ContractNoteRepositoryBase.cs" />
+    <Compile Include="RepositoryBases\ContractRateAltRepositoryBase.cs" />
+    <Compile Include="RepositoryBases\ContractRateRepositoryBase.cs" />
+    <Compile Include="RepositoryBases\ContractRepositoryBase.cs" />
+    <Compile Include="RepositoryBases\ContractTatSchedRepositoryBase.cs" />
+    <Compile Include="RepositoryBases\ContractVolumeEvtRepositoryBase.cs" />
+    <Compile Include="RepositoryBases\DeliveryMethodRepositoryBase.cs" />
+    <Compile Include="RepositoryBases\ErrClientErrorTypeRepositoryBase.cs" />
+    <Compile Include="RepositoryBases\ErrClientWorkTypeRepositoryBase.cs" />
+    <Compile Include="RepositoryBases\ErrNoValidContractRepositoryBase.cs" />
+    <Compile Include="RepositoryBases\ExtSysRepositoryBase.cs" />
+    <Compile Include="RepositoryBases\ExtWorkTypeRepositoryBase.cs" />
+    <Compile Include="RepositoryBases\ExtWorkTypeSourceRepositoryBase.cs" />
+    <Compile Include="RepositoryBases\FaxCompMethodRepositoryBase.cs" />
+    <Compile Include="RepositoryBases\FreqRepositoryBase.cs" />
+    <Compile Include="RepositoryBases\InvoiceDetailRepositoryBase.cs" />
+    <Compile Include="RepositoryBases\InvoiceGroupRepositoryBase.cs" />
+    <Compile Include="RepositoryBases\InvoiceGrpOverrideRepositoryBase.cs" />
+    <Compile Include="RepositoryBases\InvoiceGrpReportRepositoryBase.cs" />
+    <Compile Include="RepositoryBases\InvoiceGrpStatusRepositoryBase.cs" />
+    <Compile Include="RepositoryBases\InvoiceRepositoryBase.cs" />
+    <Compile Include="RepositoryBases\InvoiceStatusRepositoryBase.cs" />
+    <Compile Include="RepositoryBases\InvoiceStyleRepositoryBase.cs" />
+    <Compile Include="RepositoryBases\OverRideKeySourceRepositoryBase.cs" />
+    <Compile Include="RepositoryBases\PaymentTermsRepositoryBase.cs" />
+    <Compile Include="RepositoryBases\PlatformRepositoryBase.cs" />
+    <Compile Include="RepositoryBases\QtyRuleRepositoryBase.cs" />
+    <Compile Include="RepositoryBases\RemitToRepositoryBase.cs" />
+    <Compile Include="RepositoryBases\ReportTypeRepositoryBase.cs" />
+    <Compile Include="RepositoryBases\ScopeRuleRepositoryBase.cs" />
+    <Compile Include="RepositoryBases\StatCompMethodRepositoryBase.cs" />
+    <Compile Include="RepositoryBases\InvoiceDetailReportTypeQuery.cs" />
+    <Compile Include="RepositoryBases\InvoiceGroupReportsInfoQuery.cs" />
+    <Compile Include="RepositoryBases\InvoiceReportAddOnChargesQuery.cs" />
+    <Compile Include="RepositoryBases\InvoiceReportParametersQuery.cs" />
+    <Compile Include="RepositoryBases\InvoiceReportTranscriptionLinesQuery.cs" />
+    <Compile Include="RepositoryBases\InvoiceStyleColumnRepositoryBase.cs" />
+    <Compile Include="RepositoryBases\RepositoryBase.cs" />
+    <Compile Include="RepositoryBases\TatCompMethodRepositoryBase.cs" />
+    <Compile Include="RepositoryBases\TatRateRepositoryBase.cs" />
+    <Compile Include="RepositoryBases\TatSchedRepositoryBase.cs" />
+    <Compile Include="RepositoryBases\VolumeEvtRateRepositoryBase.cs" />
+    <Compile Include="RepositoryBases\VolumeEvtTypeRepositoryBase.cs" />
+    <Compile Include="RepositoryBases\WorkUnitRepository.cs" />
+    <Compile Include="RepositoryInterfaces\IActiveScheduleRepository.cs" />
+    <Compile Include="RepositoryInterfaces\IAddOnChgSchedRepository.cs" />
+    <Compile Include="RepositoryInterfaces\IAddOnChgTypeRepository.cs" />
+    <Compile Include="RepositoryInterfaces\IAdjTypeRepository.cs" />
+    <Compile Include="RepositoryInterfaces\IBatchJobRepository.cs" />
+    <Compile Include="RepositoryInterfaces\IBatchJobType.cs" />
+    <Compile Include="RepositoryInterfaces\IBillingSpecialistRepository.cs" />
+    <Compile Include="RepositoryInterfaces\IBrandsRepository.cs" />
+    <Compile Include="RepositoryInterfaces\IChargeMethodRepository.cs" />
+    <Compile Include="RepositoryInterfaces\IContractNoteRepository.cs" />
+    <Compile Include="RepositoryInterfaces\IContractRateAltRepository.cs" />
+    <Compile Include="RepositoryInterfaces\IContractRateRepository.cs" />
+    <Compile Include="RepositoryInterfaces\IContractRepository.cs" />
+    <Compile Include="RepositoryInterfaces\IContractTatSchedRepository.cs" />
+    <Compile Include="RepositoryInterfaces\IContractVolumeEvtRepository.cs" />
+    <Compile Include="RepositoryInterfaces\ICrudRepository.cs" />
+    <Compile Include="RepositoryInterfaces\IDeliveryMethods.cs" />
+    <Compile Include="RepositoryInterfaces\IErrClientErrorTypeRepository.cs" />
+    <Compile Include="RepositoryInterfaces\IErrClientWorkTypeRepository.cs" />
+    <Compile Include="RepositoryInterfaces\IErrNoValidContractRepository.cs" />
+    <Compile Include="RepositoryInterfaces\IExtClientRepository.cs" />
+    <Compile Include="RepositoryInterfaces\IExtSysRepository.cs" />
+    <Compile Include="RepositoryInterfaces\IExtWorkTypeRepository.cs" />
+    <Compile Include="RepositoryInterfaces\IExtWorkTypeSourceRepository.cs" />
+    <Compile Include="RepositoryInterfaces\IFaxCompMethodRepository.cs" />
+    <Compile Include="RepositoryInterfaces\IFreqRepository.cs" />
+    <Compile Include="RepositoryInterfaces\IInvoiceDetailReportTypeQuery.cs" />
+    <Compile Include="RepositoryInterfaces\IInvoiceDetailRepositoryBase.cs" />
+    <Compile Include="RepositoryInterfaces\IInvoiceGroupReportsInfoQuery.cs" />
+    <Compile Include="RepositoryInterfaces\IInvoiceGroupRepository.cs" />
+    <Compile Include="RepositoryInterfaces\IInvoiceGrpOverrideRepository.cs" />
+    <Compile Include="RepositoryInterfaces\IInvoiceGrpReportRepository.cs" />
+    <Compile Include="RepositoryInterfaces\IInvoiceReportAddOnChargesQuery.cs" />
+    <Compile Include="RepositoryInterfaces\IInvoiceReportParametersQuery.cs" />
+    <Compile Include="RepositoryInterfaces\IInvoiceReportTranscriptionLinesQuery.cs" />
+    <Compile Include="RepositoryInterfaces\IInvoiceRepository.cs" />
+    <Compile Include="RepositoryInterfaces\IInvoiceStyleColumnRepository.cs" />
+    <Compile Include="RepositoryInterfaces\IInvoiceStyleRepository.cs" />
+    <Compile Include="RepositoryInterfaces\IInvoiceStatusRepository.cs" />
+    <Compile Include="RepositoryInterfaces\IInvoiceGrpStatusRepository.cs" />
+    <Compile Include="RepositoryInterfaces\IOverRideKeySourceRepository.cs" />
+    <Compile Include="RepositoryInterfaces\IPaymentTermsRepository.cs" />
+    <Compile Include="RepositoryInterfaces\IQtyRuleRepository.cs" />
+    <Compile Include="RepositoryInterfaces\IRemitToRepository.cs" />
+    <Compile Include="RepositoryInterfaces\IReportTypeRepository.cs" />
+    <Compile Include="RepositoryInterfaces\IScopeRuleRepository.cs" />
+    <Compile Include="RepositoryInterfaces\IStatCompMethodRepository.cs" />
+    <Compile Include="RepositoryInterfaces\ITatCompMethodRepository.cs" />
+    <Compile Include="RepositoryInterfaces\ITatRateRepository.cs" />
+    <Compile Include="RepositoryInterfaces\ITatSchedRepository.cs" />
+    <Compile Include="RepositoryInterfaces\IVolumeEvtRateRepository.cs" />
+    <Compile Include="RepositoryInterfaces\IVolumeEvtTypeRepository.cs" />
+    <Compile Include="RepositoryInterfaces\IWorkUnitRepository.cs" />
+    <Compile Include="RepositoryInterfaces\PlatformRepository.cs" />
+    <Compile Include="UserDal.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Spheris.Billing.Core\Spheris.Billing.Core.csproj">
+      <Project>{7B94EB5A-835C-4C27-9704-C599C2B52428}</Project>
+      <Name>Spheris.Billing.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Spheris.Common\Spheris.Common.csproj">
+      <Project>{BE3ED2F1-54FA-4B2F-924A-5C98FCBC7261}</Project>
+      <Name>Spheris.Common</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="SpherisFinance.pfx" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

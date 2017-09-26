@@ -1,0 +1,29 @@
+﻿<Window x:Class="Spheris.Billing.LoginForm"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Login" 
+    ResizeMode="NoResize" 
+    SizeToContent="WidthAndHeight" 
+    WindowStartupLocation="CenterScreen"
+    Background="{DynamicResource WindowBackgroundBrush}">
+    
+    <Grid Margin="5 5 5 5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="User Name:  " Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" />
+        <TextBox Name="txtUserName" Width="150" Grid.Row="0" Grid.Column="1" Margin="5 5 5 5" TabIndex="0" />
+        <TextBlock Text="Password:" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center"/>
+        <PasswordBox Name="txtPassword" Width="150" Grid.Row="1" Grid.Column="1" Margin="5 5 5 5" TabIndex="1" />
+        <StackPanel Orientation="Horizontal" Grid.Row="2" Grid.Column="1" Margin="5 0 5 0" HorizontalAlignment="Right">
+            <Button Name="btnOK" Width="50" Margin="0 0 5 0" IsDefault="True" TabIndex="2">OK</Button>
+            <Button Name="btnCancel" Width="50" IsCancel="True" TabIndex="3">Cancel</Button>
+        </StackPanel>
+    </Grid>
+</Window>

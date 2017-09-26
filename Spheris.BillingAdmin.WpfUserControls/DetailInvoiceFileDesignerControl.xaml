@@ -1,0 +1,172 @@
+﻿<UserControl x:Class="Spheris.BillingAdmin.WpfUserControls.DetailInvoiceFileDesignerControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    >
+
+    <UserControl.Resources>
+        <SolidColorBrush x:Key="SpherisLightBlue" Color="#FF4E78B4" Opacity="1" />
+        <SolidColorBrush x:Key="SpherisDarkBlue" Color="#FF154F99" Opacity="1" />
+
+        <!--specifies a corner radius to use throughout this page-->
+        <CornerRadius x:Key="BorderRadii">5</CornerRadius>
+
+        <!--specifies the default style/control template of all textboxes-->
+        <Style TargetType="{x:Type TextBox}">
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Background" Value="Azure"/>
+            <Setter Property="IsReadOnly" Value="False"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Height" Value="25"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <!--note this border with associated corner radius-->
+                        <Border Name="Border" CornerRadius="{StaticResource BorderRadii}" Padding="2" BorderThickness="1" Background="{StaticResource SpherisLightBlue}">
+                            <ScrollViewer SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" x:Name="PART_ContentHost"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!--specifies the default style/control template of all textboxes-->
+        <Style TargetType="{x:Type ListBox}">
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Background" Value="Azure"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListBox}">
+                        <!--note this border with associated corner radius-->
+                        <Border Name="Border" CornerRadius="{StaticResource BorderRadii}" Padding="2" BorderThickness="1" Background="{StaticResource SpherisLightBlue}">
+                            <ScrollViewer SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" x:Name="PART_ContentHost"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+    </UserControl.Resources>
+
+    <UserControl.Background>
+        <LinearGradientBrush>
+            <GradientStop Color="#FF154F99" Offset="0"/>
+            <GradientStop Color="#FF4E78B4" Offset="1"/>
+        </LinearGradientBrush>
+    </UserControl.Background>
+
+    <Grid Margin="5 5 5 5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Orientation="Horizontal"
+                    Grid.Row="0"
+                    Grid.ColumnSpan="3">
+            <Label Name="lblDetailFileStyle" 
+                   HorizontalAlignment="Left" >
+                Detail File Style:
+            </Label>
+            <ComboBox Name="cmbStyleNames" 
+                      Margin="5 0"/>
+            <Button Name="btnNewStyle">New</Button>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal"
+                    Margin="0 5 0 5"
+                    Grid.Row="1"
+                    Grid.ColumnSpan="3">
+            <Label Name="lblDescription">Description:</Label>
+            <TextBox Name="txtDescription" 
+                     Width="535" >
+            </TextBox>
+        </StackPanel>
+        <StackPanel Orientation="Vertical"
+                    Margin="0 0 2.5 0"
+                    Grid.Row="2"
+                    Grid.Column="0">
+            <Label Name="lblReportedFields" 
+                   VerticalAlignment="Bottom" >
+                Reported Fields:
+            </Label>
+            <ListBox Name="lstReportedFields" 
+                     SelectionMode="Extended" 
+                     MinHeight="146" 
+                     ToolTip="Drag fields out of this box to remove them from the report." />
+        </StackPanel>
+        <StackPanel Orientation="Vertical"
+                    Margin="2.5 0 0 0"
+                    Grid.Row="2"
+                    Grid.Column="2">
+            <Label Name="lblAvailableFields"
+                   VerticalAlignment="Bottom">
+                Available Fields:
+            </Label>
+            <ListBox Name="lstAvailableFields" 
+                     SelectionMode="Extended" 
+                     MinHeight="146" 
+                     ToolTip="Drag fields from this list and drop them in the Reported Fields list to have them included on the report." />
+        </StackPanel>
+        <Border Name="btnSql"
+				Grid.Row="2"
+				Grid.Column="1"
+				Width="21"
+				Height="146"
+				VerticalAlignment="Bottom"
+				HorizontalAlignment="Center"
+				CornerRadius="{StaticResource BorderRadii}" >
+            <Label Content="SQL"
+				   HorizontalAlignment="Center"
+				   VerticalAlignment="Center"
+                   FontSize="8">
+                <Label.LayoutTransform>
+                    <RotateTransform Angle="90"/>
+                </Label.LayoutTransform>
+            </Label>
+            <Border.Background>
+                <SolidColorBrush Color="#FFF4793B" Opacity=".5" />
+            </Border.Background>
+        </Border>
+        <StackPanel Orientation="Horizontal"
+                    Margin="0 5 0 5"
+                    Grid.Row="3"
+                    Grid.Column="0">
+            <Label Name="lblFileExtension">File Extension:</Label>
+            <TextBox Name="txtFileExtension"
+                     MinWidth="50"
+                     Margin="0 0 5 0"
+                     Text="XLS" />
+            <CheckBox Name="chkActive"
+                      VerticalAlignment="Center">
+                Is Active?
+            </CheckBox>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal"
+                    HorizontalAlignment="Right"
+                    Margin="0 5 0 5"
+                    Grid.Row="3"
+                    Grid.Column="2">
+            <Button Name="btnCancel"
+                     IsCancel="True" 
+                     Width="50"
+                     Margin="0 0 5 0"
+                     ToolTip="Cancel editing of the current style and close the window."
+                     Content="Cancel"/>
+            <Button Name="btnOk" 
+                    Width="50"
+                    ToolTip="Save changes to the current style and close the window." 
+                    Content="OK"/>
+        </StackPanel>
+    </Grid>
+
+</UserControl>

@@ -1,0 +1,128 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:presenter="clr-namespace:MedQuist.BillingAdmin.Presentation.ValueConverters;assembly=MedQuist.BillingAdmin.Presentation"
+                    xmlns:wintheme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero">
+
+    <!--
+        <Style x:Key="StdText"  TargetType="TextBox">
+        <Setter Property="MinHeight" Value="25"/>
+        <Setter Property="MaxHeight" Value="26"/>
+        <Setter Property="MinWidth" Value="100"/>
+        <Setter Property="Margin" Value="11,11,0,0"/>
+        <Style.Triggers>
+        </Style.Triggers>
+        </Style>
+        
+        <Style x:Key="StdLabel"  TargetType="Label">
+        <Setter Property="MinHeight" Value="25"/>
+        <Setter Property="MaxHeight" Value="26"/>
+        <Setter Property="MinWidth" Value="100"/>
+        <Setter Property="Margin" Value="11,11,0,0"/>
+        <Style.Triggers>
+        </Style.Triggers>
+        </Style>
+    -->
+    
+    <Style x:Key="AutoCollapse" TargetType="TextBlock">
+        <Style.Triggers>
+            <DataTrigger Binding="{Binding Path=Text, RelativeSource={RelativeSource Self}}" Value="">
+                <Setter Property="Visibility" Value="Collapsed" />
+            </DataTrigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--  DARK BACKGROUND  -->
+    <LinearGradientBrush x:Key="DarkBackground"
+                         StartPoint="0,0"
+                         EndPoint="1,1">
+        <GradientStop Offset="0"
+                      Color="#FF333344" />
+        <GradientStop Offset="1"
+                      Color="#FF666677" />
+    </LinearGradientBrush>
+    <!--  LIGHT BACKGROUND  -->
+    <LinearGradientBrush x:Key="LightBackground"
+                         StartPoint="0,0"
+                         EndPoint="1,1">
+        <GradientStop Offset="0"
+                      Color="#E3BD5B" />
+        <GradientStop Offset="1"
+                      Color="#B6902E" />
+    </LinearGradientBrush>
+    <!--  CONTROL BACKGROUND  -->
+    <SolidColorBrush x:Key="BaseColor"
+                     Color="#5BA0CD" />
+
+    <!--  GLASS EFFECT  -->
+    <LinearGradientBrush x:Key="GlassFX"
+                         StartPoint=".5,0"
+                         EndPoint=".5,.5">
+        <GradientStop Offset="1"
+                      Color="#364169" />
+        <GradientStop Offset="1"
+                      Color="#364169" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="GlassFXDisabled"
+                         StartPoint=".5,0"
+                         EndPoint=".5,.5">
+        <GradientStop Offset="1"
+                      Color="#33BBBBBB" />
+        <GradientStop Offset="1"
+                      Color="#11000000" />
+    </LinearGradientBrush>
+
+    <!--  GLOW EFFECT  -->
+    <RadialGradientBrush x:Key="GlowFX"
+                         Center=".5,1"
+                         GradientOrigin=".5,1">
+        <GradientStop Offset="0"
+                      Color="#990000FF" />
+        <GradientStop Offset=".5"
+                      Color="#660000DD" />
+        <GradientStop Offset="1"
+                      Color="#33000000" />
+    </RadialGradientBrush>
+    <RadialGradientBrush x:Key="GlowFXPressed"
+                         Center=".5,1"
+                         GradientOrigin=".5,1">
+        <GradientStop Offset="0"
+                      Color="#660000CC" />
+        <GradientStop Offset="1.2"
+                      Color="#33FFFFFF" />
+    </RadialGradientBrush>
+    <LinearGradientBrush x:Key="GlowFXRowPressed">
+        <GradientStop Offset="0"
+                      Color="#660000FF" />
+        <GradientStop Offset=".7"
+                      Color="#660000AA" />
+        <GradientStop Offset="1"
+                      Color="#66000000" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="GlowFXProgress">
+        <GradientStop Offset="0"
+                      Color="#660099FF" />
+        <GradientStop Offset=".99"
+                      Color="#660022AA" />
+        <GradientStop Offset="1"
+                      Color="#00000000" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="GlowFXProgressAnimated"
+                         MappingMode="RelativeToBoundingBox">
+        <GradientStop Offset="0"
+                      Color="#00000000" />
+        <GradientStop Offset=".50"
+                      Color="#660099FF" />
+        <GradientStop Offset="1"
+                      Color="#00000000" />
+    </LinearGradientBrush>
+    <LinearGradientBrush x:Key="GlowFXTabSelected"
+                         StartPoint=".5,1"
+                         EndPoint=".5,0">
+        <GradientStop Offset="0"
+                      Color="#33DDDDDD" />
+        <GradientStop Offset="1"
+                      Color="#332222FF" />
+    </LinearGradientBrush>
+
+
+</ResourceDictionary>
